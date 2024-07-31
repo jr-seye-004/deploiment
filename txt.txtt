@@ -1,0 +1,137 @@
+// const express = require('express');
+// const mongoose = require('mongoose');
+// const cors = require('cors');
+
+// const app = express();
+// const port = process.env.PORT || 5000;
+
+// app.use(cors());
+// app.use(express.json());
+
+// const uri = 'YOUR_MONGODB_URI';
+// mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+// const connection = mongoose.connection;
+// connection.once('open', () => {
+//     console.log('MongoDB database connection established successfully');
+// });
+
+// app.get('/', (req, res) => {
+//     res.send('Hello from the backend!');
+// });
+
+// app.listen(port, () => {
+//     console.log(`Server is running on port: ${port}`);
+// });
+
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+
+const app = express();
+const port = process.env.PORT || 5000;
+
+app.use(cors());
+app.use(express.json());
+
+const uri =  "mongodb+srv://seyeyoussoupha4:JUNI0RS3Y3@mern.hk0d5bk.mongodb.net/?retryWrites=true&w=majority&appName=MERN";
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+const connection = mongoose.connection;
+connection.once('open', () => {
+    console.log('MongoDB database connection established successfully');
+});
+
+app.get('/', (req, res) => {
+    res.send('Hello from the backend!');
+});
+
+app.listen(port, () => {
+    console.log(`Server is running on port: ${port}`);
+});
+
+
+const { MongoClient, ServerApiVersion } = require('mongodb');
+
+
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
+
+app.js
+
+import React, { useEffect, useState } from 'react';
+
+import axios from 'axios';
+import './App.css';
+
+function App() {
+    const [data, setData] = useState(null);
+
+    useEffect(() => {
+        axios.get('https://jsonplaceholder.typicode.com/todos/1')
+            .then(response => {
+                setData(response.data);
+            })
+            .catch(error => {
+                console.error('There was an error fetching the data!', error);
+                setData({ error: 'Error fetching data' });
+            });
+    }, []);
+
+    return (
+        <div className="App">
+            <header className="App-header">
+                <h1>Welcome to My MERN App</h1>
+                {data ? (
+                    <div>
+                       <p>
+                        <h2>So beugué ma wanela FAYMAAAAA!!</h2>
+                       </p>
+                    </div>
+                ) : (
+                    <p>Loading...</p>
+                )}
+                <footer>
+                    <p>Footer content here</p>
+                </footer>
+            </header>
+        </div>
+    );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+export default App;
+
+
+
